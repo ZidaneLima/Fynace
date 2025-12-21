@@ -1,0 +1,16 @@
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f8fafc;
+}
+
+h1, h2, h3 {
+  color: #1e293b;
+}
+
+section.main {
+  padding: 2rem;
+}
+
+.block-container {
+  padding-top: 2rem !important;
+}

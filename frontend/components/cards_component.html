@@ -1,0 +1,36 @@
+<div class="cards-container">
+  {% for item in cards %}
+  <div class="card">
+    <h3>{{ item.title }}</h3>
+    <p>{{ item.value }}</p>
+  </div>
+  {% endfor %}
+</div>
+
+<style>
+.cards-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.card {
+  background: linear-gradient(135deg, #3a7bd5, #3a6073);
+  color: white;
+  padding: 1.2rem 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  min-width: 200px;
+  text-align: center;
+}
+.card h3 {
+  margin: 0;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+.card p {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 0.4rem 0 0;
+}
+</style>
