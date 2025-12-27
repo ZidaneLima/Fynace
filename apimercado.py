@@ -1,5 +1,19 @@
+"""
+Legacy Mercado Pago API file - DO NOT USE in production
+This file exists for reference only. Use the new payment system in backend/payments/
+"""
 import mercadopago
-sdk = mercadopago.SDK("EST-7430204721093650-122118-477d0da502a318df08aa635161754e42-467461530")
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Get access token from environment variable
+access_token = os.getenv("MERCADOPAGO_ACCESS_TOKEN")
+if not access_token:
+    raise ValueError("MERCADOPAGO_ACCESS_TOKEN environment variable is required")
+
+sdk = mercadopago.SDK(access_token)
 
 payment_data = {
     "items": [

@@ -13,7 +13,7 @@ def _headers(token: str):
 
 def get_resumo(token: str):
     response = requests.get(
-        f"{API_URL}/financas/resumo",
+        f"{API_URL}/resumo",
         headers=_headers(token)
     )
     response.raise_for_status()
@@ -22,7 +22,7 @@ def get_resumo(token: str):
 
 def post_transacao(data: dict, token: str):
     response = requests.post(
-        f"{API_URL}/financas/transacoes",
+        f"{API_URL}/transacoes",
         json=data,
         headers=_headers(token)
     )

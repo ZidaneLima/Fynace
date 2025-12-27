@@ -19,4 +19,6 @@ dependencies = [
     "streamlit>=1.51.0",
     "uvicorn>=0.38.0",
     "mercadopago>=2.3.0",
+    "slowapi>=0.1.9",
+    "supabase>=2.27.0",
 ]

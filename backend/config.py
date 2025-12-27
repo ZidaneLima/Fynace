@@ -10,6 +10,7 @@ def get_env_or_raise(name: str) -> str:
 
 SUPABASE_URL = get_env_or_raise("SUPABASE_URL")
 SUPABASE_ANON_KEY = get_env_or_raise("SUPABASE_ANON_KEY")
-SUPABASE_ANON_KEY = get_env_or_raise("SUPABASE_JWT_SECRET")
+SUPABASE_JWT_SECRET = get_env_or_raise("SUPABASE_JWT_SECRET")
 
-MP_ACCESS_TOKEN = get_env_or_raise("MP_ACCESS_TOKEN")
+# Mercado Pago token (if needed)
+MP_ACCESS_TOKEN = os.getenv("MP_ACCESS_TOKEN")  # Not required for core functionality
