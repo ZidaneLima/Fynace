@@ -1,28 +1,37 @@
-from fastapi import Header, HTTPException
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import jwt, JWTError
-import os
+import requests
 
-SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET")
-JWT_ALG = "HS256"
+security = HTTPBearer()
 
-def verify_jwt(authorization: str = Header(...)):
-    if not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Token inválido")
+SUPABASE_PROJECT_REF = "jzdikonmvsxtlheskhjl"
+JWKS_URL = f"https://{SUPABASE_PROJECT_REF}.supabase.co/auth/v1/.well-known/jwks.json"
 
-    token = authorization.split(" ")[1]
+jwks = requests.get(JWKS_URL).json()
+
+def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+):
+    token = credentials.credentials
 
     try:
+        header = jwt.get_unverified_header(token)
+        kid = header.get("kid")
+
+        key = next(k for k in jwks["keys"] if k["kid"] == kid)
+
         payload = jwt.decode(
             token,
-            SUPABASE_JWT_SECRET,
-            algorithms=[JWT_ALG],
+            key,
+            algorithms=["RS256"],
             audience="authenticated",
+            issuer=f"https://{SUPABASE_PROJECT_REF}.supabase.co/auth/v1"
         )
+        return payload
 
-        return {
-            "user_id": payload["sub"],
-            "email": payload.get("email")
-        }
-
-    except JWTError:
-        raise HTTPException(status_code=401, detail="JWT inválido")
+    except (JWTError, StopIteration):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token inválido ou expirado",
+        )

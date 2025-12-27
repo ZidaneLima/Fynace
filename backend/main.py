@@ -1,14 +1,23 @@
-from backend.routes import transacoes, resumo
-from dotenv import load_dotenv
 import os
-from fastapi import FastAPI
-from backend.auth import router as auth_router
-
+from dotenv import load_dotenv
 
 load_dotenv()
 
-app = FastAPI(title=os.getenv("APP_NAME", "Fynace API"))
-app.include_router(auth_router)
+from fastapi import FastAPI, Depends
+
+from backend.routes import transacoes, resumo
+from backend.auth_utils import get_current_user
+
+
+app = FastAPI(title=os.getenv("APP_NAME", "Fynace"))
 
 app.include_router(transacoes.router, prefix="/transacoes", tags=["Transações"])
 app.include_router(resumo.router, prefix="/resumo", tags=["Resumo"])
+
+@app.get("/saudez")
+def health():
+    return {"status": "ok"}
+
+@app.get("/me")
+def me(user=Depends(get_current_user)):
+    return user

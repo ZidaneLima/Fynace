@@ -1,27 +1,30 @@
+import os
 import requests
-import streamlit as st
 
-API_URL = "http://127.0.0.1:8000"
-
-def login_with_google():
-    try:
-        response = requests.get(f"{API_URL}/auth/google/login")
-        response.raise_for_status()
-        auth_url = response.json().get("auth_url")
-
-        if auth_url:
-            st.markdown(f"[🔐 Entrar com Google]({auth_url})")
-        else:
-            st.error("Não foi possível obter a URL de autenticação.")
-    except Exception as e:
-        st.error(f"Erro ao conectar com a API: {e}")
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 
 
-def get_resumo(token):
-    headers = {"Authorization": f"Bearer {token}"}
-    return requests.get(f"{API_URL}/resumo/", headers=headers).json()
+def _headers(token: str):
+    return {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json",
+    }
 
-def post_transacao(data, token):
-    headers = {"Authorization": f"Bearer {token}"}
-    return requests.post(f"{API_URL}/transacoes/", params=data, headers=headers)
-    
+
+def get_resumo(token: str):
+    response = requests.get(
+        f"{API_URL}/financas/resumo",
+        headers=_headers(token)
+    )
+    response.raise_for_status()
+    return response.json()
+
+
+def post_transacao(data: dict, token: str):
+    response = requests.post(
+        f"{API_URL}/financas/transacoes",
+        json=data,
+        headers=_headers(token)
+    )
+    response.raise_for_status()
+    return response.json()

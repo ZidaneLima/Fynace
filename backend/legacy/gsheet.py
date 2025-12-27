@@ -3,10 +3,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from typing import List
 import logging
-from backend.config import GOOGLE_CLIENT_SECRETS_FILE
 
-
-CLIENT_SECRETS_FILE = GOOGLE_CLIENT_SECRETS_FILE
 
 
 logger = logging.getLogger(__name__)
