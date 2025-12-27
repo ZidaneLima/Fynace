@@ -1,7 +1,8 @@
 fastapi
-uvicorn
-python-jose
+uvicorn[standard]
+python-jose[cryptography]
+pydantic
 google-api-python-client
 google-auth
 google-auth-oauthlib
-pydantic
+python-dotenv
