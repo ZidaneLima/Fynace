@@ -8,3 +8,4 @@ google-auth-oauthlib
 python-dotenv
 slowapi
 supabase
+mercadopago
