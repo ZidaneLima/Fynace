@@ -14,3 +14,4 @@ SUPABASE_JWT_SECRET = get_env_or_raise("SUPABASE_JWT_SECRET")
 
 # Mercado Pago token
 MERCADOPAGO_ACCESS_TOKEN = os.getenv("MERCADOPAGO_ACCESS_TOKEN")  #Not required for core functionality
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:8501")
