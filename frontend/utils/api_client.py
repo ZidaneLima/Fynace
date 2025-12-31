@@ -1,7 +1,7 @@
 import os
 import requests
 
-API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
+BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
 
 
 def _headers(token: str):
@@ -13,7 +13,7 @@ def _headers(token: str):
 
 def get_resumo(token: str):
     response = requests.get(
-        f"{API_URL}/resumo",
+        f"{BACKEND_URL}/resumo",
         headers=_headers(token)
     )
     response.raise_for_status()
@@ -22,7 +22,7 @@ def get_resumo(token: str):
 
 def post_transacao(data: dict, token: str):
     response = requests.post(
-        f"{API_URL}/transacoes",
+        f"{BACKEND_URL}/transacoes",
         json=data,
         headers=_headers(token)
     )
